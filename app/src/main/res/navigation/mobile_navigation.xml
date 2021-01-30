@@ -7,5 +7,12 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.mexator.fintech_test.ui.fragment.feed.FeedFragment"
-        android:label="FeedFragment" />
+        android:label="FeedFragment">
+
+        <argument
+            android:name="source"
+            android:defaultValue="@null"
+            app:argType="com.mexator.fintech_test.data.Source" />
+    </fragment>
+
 </navigation>
