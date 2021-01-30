@@ -7,4 +7,5 @@
     <dimen name="button_margin">12dp</dimen>
 
     <dimen name="post_corner_radius">8dp</dimen>
+    <dimen name="cloud_size">72dp</dimen>
 </resources>

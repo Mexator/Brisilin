@@ -17,27 +17,23 @@
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
-            style="@style/BackForthButtons"
+            style="@style/BackForthButtons.BackCardView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/button_side">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="@dimen/button_side"
-                android:layout_height="@dimen/button_side"
+                style="@style/BackForthButtons.ImageView"
                 android:src="@drawable/ic_refresh"
                 app:tint="@color/yellow" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            style="@style/BackForthButtons"
+            style="@style/BackForthButtons.BackCardView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="@dimen/button_side">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_width="@dimen/button_side"
-                android:layout_height="@dimen/button_side"
+                style="@style/BackForthButtons.ImageView"
                 android:src="@drawable/ic_arrow_forward"
                 app:tint="@color/green" />
         </androidx.cardview.widget.CardView>

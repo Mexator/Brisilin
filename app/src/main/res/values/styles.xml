@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="BackForthButtons">
+    <style name="BackForthButtons"/>
+    <style name="BackForthButtons.BackCardView">
         <item name="android:layout_margin">@dimen/button_margin</item>
         <item name="android:elevation">8dp</item>
+        <item name="cardCornerRadius">@dimen/button_side</item>
+    </style>
+    <style name="BackForthButtons.ImageView">
+        <item name="android:layout_width">@dimen/button_side</item>
+        <item name="android:layout_height">@dimen/button_side</item>
     </style>
 </resources>
