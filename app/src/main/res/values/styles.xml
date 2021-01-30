@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BackForthButtons">
+        <item name="android:layout_margin">@dimen/button_margin</item>
+        <item name="android:elevation">8dp</item>
+    </style>
+</resources>
