@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Fintech-test</string>
 
-    <string name="error_text">Произошла ошибка при загрузке данных. Проверьте подключение к сети</string>
+    <string name="error_loading_post_text">Произошла ошибка при загрузке данных. Проверьте подключение к сети</string>
+    <string name="error_loading_image_text">Произошла ошибка при загрузке фото. Проверьте подключение к сети</string>
     <string name="button_retry_text">Повторить</string>
 </resources>

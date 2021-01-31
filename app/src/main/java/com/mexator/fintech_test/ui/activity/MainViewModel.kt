@@ -18,7 +18,7 @@ class MainViewModel : ViewModel() {
         _viewState.onNext(
             MainViewState(
                 displayedSources = listOf(
-                    Source.Random(),
+//                    Source.Random(),
                     Source.Top(),
                     Source.Hot(),
                     Source.Latest()

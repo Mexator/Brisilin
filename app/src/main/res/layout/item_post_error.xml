@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
-        android:text="@string/error_text"
+        android:text="@string/error_loading_post_text"
         android:textAlignment="center" />
 
     <Button
