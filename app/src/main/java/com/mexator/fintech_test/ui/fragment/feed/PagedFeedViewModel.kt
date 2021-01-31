@@ -1,33 +1,24 @@
 package com.mexator.fintech_test.ui.fragment.feed
 
-import androidx.lifecycle.ViewModel
-import com.mexator.fintech_test.data.Repository
 import com.mexator.fintech_test.data.Source
-import com.mexator.fintech_test.data.model.Post
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
 
-data class FeedViewState(
-    val progress: Boolean = false,
-    val error: Boolean = false,
-    val loadedPosts: List<Post> = emptyList(),
-    val position: Int = 0,
-    val nextPageToLoad: Int = 0
-)
-
-class FeedViewModel(val source: Source) : ViewModel() {
-    private val repository = Repository
-
-    private val _viewState = BehaviorSubject.create<FeedViewState>()
-    val viewState: Observable<FeedViewState> = _viewState
-
-    init {
-        _viewState.onNext(
-            FeedViewState()
-        )
+class PagedFeedViewModel(override val source: Source.PagedSource) : FeedViewModel() {
+    companion object {
+        const val PAGE_SIZE = 5
+        const val PRELOAD_MARGIN = 2
     }
 
-    fun getNextPage() {
+    init {
+        getNextPage()
+    }
+
+    override fun onPageSelected(pageNumber: Int) {
+        if (pageNumber % PAGE_SIZE == PAGE_SIZE - PRELOAD_MARGIN) {
+            getNextPage()
+        }
+    }
+
+    private fun getNextPage() {
         with(_viewState) {
             onNext(value!!.copy(progress = true))
             repository.getPosts(source, this.value!!.nextPageToLoad)
@@ -53,4 +44,3 @@ class FeedViewModel(val source: Source) : ViewModel() {
         }
     }
 }
-

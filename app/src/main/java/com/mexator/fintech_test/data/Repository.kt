@@ -17,7 +17,7 @@ object Repository {
 
     private val userAPI = retrofit.create(DevelopersLifeAPI::class.java)
 
-    fun getPosts(source: Source, page: Int): Single<List<Post>> =
+    fun getPosts(source: Source.PagedSource, page: Int): Single<List<Post>> =
         userAPI.getPage(source.path, page)
             .map { it.result }
 
