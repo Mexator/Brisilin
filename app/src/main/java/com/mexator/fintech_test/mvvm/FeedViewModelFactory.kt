@@ -1,4 +1,4 @@
-package com.mexator.fintech_test.ui.base
+package com.mexator.fintech_test.mvvm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

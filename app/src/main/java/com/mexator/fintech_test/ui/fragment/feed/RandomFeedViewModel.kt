@@ -13,6 +13,7 @@ class RandomFeedViewModel(override val source: Source.Random) : FeedViewModel() 
 
     private fun getNextPost() {
         with(_viewState) {
+            onNext(value!!.copy(progress = true))
             repository.getRandom().subscribe({ post ->
                 val state = value!!
                 onNext(

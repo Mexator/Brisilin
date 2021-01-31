@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.mexator.fintech_test.data.Source
 import com.mexator.fintech_test.databinding.FragmentFeedBinding
 import com.mexator.fintech_test.ui.BaseFragment
-import com.mexator.fintech_test.ui.base.FeedViewModelFactory
+import com.mexator.fintech_test.mvvm.FeedViewModelFactory
 import com.mexator.fintech_test.ui.fragment.feed.list.FeedAdapter
+import com.mexator.fintech_test.ui.fragment.feed.list.StateAdapter
 
 class FeedFragment : BaseFragment<FeedViewState>() {
     companion object {
@@ -19,7 +21,8 @@ class FeedFragment : BaseFragment<FeedViewState>() {
 
     private lateinit var binding: FragmentFeedBinding
     override lateinit var viewModel: FeedViewModel
-    private val adapter = FeedAdapter()
+    private val postAdapter = FeedAdapter()
+    private val stateAdapter = StateAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +47,7 @@ class FeedFragment : BaseFragment<FeedViewState>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.postPager.adapter = adapter
+        binding.postPager.adapter = ConcatAdapter(postAdapter, stateAdapter)
         binding.postPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -53,11 +56,16 @@ class FeedFragment : BaseFragment<FeedViewState>() {
                 }
             }
         )
-
     }
 
     override fun applyViewState(state: FeedViewState) {
         Log.d("$TAG ${viewModel.source.name}", state.toString())
-        adapter.submitList(state.loadedPosts)
+        postAdapter.submitList(state.loadedPosts)
+        if (state.error) {
+            stateAdapter.state = StateAdapter.State.Error
+        }
+        if (state.progress) {
+            stateAdapter.state = StateAdapter.State.Loading
+        }
     }
 }

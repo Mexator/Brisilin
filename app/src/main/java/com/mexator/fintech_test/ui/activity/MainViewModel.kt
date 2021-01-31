@@ -1,18 +1,14 @@
 package com.mexator.fintech_test.ui.activity
 
-import androidx.lifecycle.ViewModel
 import com.mexator.fintech_test.data.Source
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
+import com.mexator.fintech_test.ui.BaseViewModel
 
 data class MainViewState(
     val displayedSources: List<Source> = emptyList(),
     val chosenSource: Int = 0
 )
 
-class MainViewModel : ViewModel() {
-    private val _viewState = BehaviorSubject.create<MainViewState>()
-    val viewState: Observable<MainViewState> = _viewState
+class MainViewModel : BaseViewModel<MainViewState>() {
 
     init {
         _viewState.onNext(
