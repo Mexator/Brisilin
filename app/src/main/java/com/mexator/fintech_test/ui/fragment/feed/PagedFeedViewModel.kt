@@ -20,7 +20,10 @@ class PagedFeedViewModel(override val source: Source.PagedSource) : FeedViewMode
 
     private fun getNextPage() {
         with(_viewState) {
+            if (!value!!.nextPageExists) return
+
             onNext(value!!.copy(progress = true))
+
             repository.getPosts(source, this.value!!.nextPageToLoad)
                 .subscribe({ posts ->
                     val state = value!!
@@ -29,7 +32,8 @@ class PagedFeedViewModel(override val source: Source.PagedSource) : FeedViewMode
                             progress = false,
                             error = false,
                             loadedPosts = state.loadedPosts + posts,
-                            nextPageToLoad = state.nextPageToLoad + 1
+                            nextPageToLoad = state.nextPageToLoad + 1,
+                            nextPageExists = posts.isNotEmpty()
                         )
                     )
                 }) {

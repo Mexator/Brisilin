@@ -9,7 +9,8 @@ data class FeedViewState(
     val progress: Boolean = false,
     val error: Boolean = false,
     val loadedPosts: List<Post> = emptyList(),
-    val nextPageToLoad: Int = 0
+    val nextPageToLoad: Int = 0,
+    val nextPageExists: Boolean = true
 )
 
 abstract class FeedViewModel : BaseViewModel<FeedViewState>() {

@@ -53,14 +53,26 @@ class FeedFragment : BaseFragment<FeedViewState>() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     viewModel.onPageSelected(position)
+                    binding.buttonBack.visibility =
+                        if (position == 0) View.INVISIBLE
+                        else View.VISIBLE
                 }
             }
         )
+        binding.buttonForward.setOnClickListener { binding.postPager.currentItem++ }
+        binding.buttonBack.setOnClickListener { binding.postPager.currentItem-- }
     }
 
     override fun applyViewState(state: FeedViewState) {
         Log.d("$TAG ${viewModel.source.name}", state.toString())
         postAdapter.submitList(state.loadedPosts)
+        binding.buttonForward.visibility =
+            if (state.nextPageExists) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+        stateAdapter.state = null
         if (state.error) {
             stateAdapter.state = StateAdapter.State.Error
         }

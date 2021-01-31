@@ -3,6 +3,7 @@ package com.mexator.fintech_test.ui
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
 /**
@@ -17,7 +18,9 @@ abstract class BaseFragment<VS> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModelDisposable =
-            viewModel.viewState.subscribe(this::applyViewState)
+            viewModel.viewState
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::applyViewState)
     }
 
     override fun onDestroyView() {
