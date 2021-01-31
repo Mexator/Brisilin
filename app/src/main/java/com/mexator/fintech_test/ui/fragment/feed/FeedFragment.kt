@@ -13,6 +13,7 @@ import com.mexator.fintech_test.ui.BaseFragment
 import com.mexator.fintech_test.mvvm.FeedViewModelFactory
 import com.mexator.fintech_test.ui.fragment.feed.list.FeedAdapter
 import com.mexator.fintech_test.ui.fragment.feed.list.StateAdapter
+import com.mexator.fintech_test.ui.util.DepthPageTransformer
 
 class FeedFragment : BaseFragment<FeedViewState>() {
     companion object {
@@ -47,6 +48,7 @@ class FeedFragment : BaseFragment<FeedViewState>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.postPager.setPageTransformer(DepthPageTransformer())
         binding.postPager.adapter = ConcatAdapter(postAdapter, stateAdapter)
         binding.postPager.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback() {
@@ -66,6 +68,12 @@ class FeedFragment : BaseFragment<FeedViewState>() {
     override fun applyViewState(state: FeedViewState) {
         Log.d("$TAG ${viewModel.source.name}", state.toString())
         postAdapter.submitList(state.loadedPosts)
+        binding.noPostsMessage.visibility =
+            if (state.loadedPosts.isEmpty()) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
         binding.buttonForward.visibility =
             if (state.nextPageExists) {
                 View.VISIBLE
