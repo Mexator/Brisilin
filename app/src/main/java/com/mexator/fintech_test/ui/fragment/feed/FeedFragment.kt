@@ -21,7 +21,7 @@ class FeedFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var source: Source = Source.Top(0)
+        var source: Source = Source.Random(0)
         arguments?.let { args ->
             args["source"]?.let {
                 source = it as Source
@@ -42,6 +42,7 @@ class FeedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getNextPage()
-        viewModel.viewState.subscribe { Log.d(TAG, it.toString()) }
+        val a =
+            viewModel.viewState.subscribe { Log.d("$TAG ${viewModel.source.name}", it.toString()) }
     }
 }

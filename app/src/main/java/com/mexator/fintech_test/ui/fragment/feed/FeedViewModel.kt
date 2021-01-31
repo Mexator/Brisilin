@@ -15,7 +15,7 @@ data class FeedViewState(
     val nextPageToLoad: Int = 0
 )
 
-class FeedViewModel(private val source: Source) : ViewModel() {
+class FeedViewModel(val source: Source) : ViewModel() {
     private val repository = Repository
 
     private val _viewState = BehaviorSubject.create<FeedViewState>()
