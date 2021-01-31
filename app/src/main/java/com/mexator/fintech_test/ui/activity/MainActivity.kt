@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.mexator.fintech_test.R
 import com.mexator.fintech_test.databinding.ActivityMainBinding
+import io.reactivex.disposables.Disposable
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
+    private var viewModelDisposable: Disposable? = null
 
     private val tabSelectedListener =
         object : TabLayout.OnTabSelectedListener {
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val a = viewModel.viewState.subscribe { state ->
+        viewModelDisposable = viewModel.viewState.subscribe { state ->
             if (binding.tabs.tabCount != state.displayedSources.size) {
                 setupTabs(binding.tabs, tabSelectedListener, state)
             }
@@ -47,6 +49,11 @@ class MainActivity : AppCompatActivity() {
             }
             navController.navigate(R.id.feedFragment, bundle)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModelDisposable?.dispose()
     }
 
     private fun setupTabs(

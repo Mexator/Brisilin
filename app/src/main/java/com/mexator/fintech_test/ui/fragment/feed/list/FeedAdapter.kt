@@ -1,6 +1,7 @@
 package com.mexator.fintech_test.ui.fragment.feed.list
 
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -19,8 +20,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 class PostViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root) {
     companion object {
         const val POSITION_IMAGE = 0
-        const val POSITION_PROGRESS = 1
         const val POSITION_ERROR = 2
+        const val TAG = "PostViewHolder"
     }
 
     fun bind(post: Post) {
@@ -30,7 +31,7 @@ class PostViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHo
     }
 
     private fun loadImage(address: String) {
-        binding.flipper.displayedChild = POSITION_PROGRESS
+        binding.flipper.displayedChild = POSITION_IMAGE
         Glide.with(binding.root.context)
             .load(address)
             .addListener(
@@ -56,15 +57,10 @@ class PostViewHolder(private val binding: ItemPostBinding) : RecyclerView.ViewHo
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        Completable.fromRunnable {
-                            binding.flipper.displayedChild = POSITION_IMAGE
-                            Glide.with(binding.root.context).load(resource).into(binding.postImage)
-                        }.subscribeOn(AndroidSchedulers.mainThread())
-                            .subscribe()
                         return false
                     }
 
-                }).submit()
+                }).into(binding.postImage)
     }
 }
 
